@@ -1,11 +1,11 @@
 import './App.css'
 import TodoList from "./TodoList.jsx";
-import Password from "./Password.jsx";
+import StudentList from "./StudentList.jsx";
 
 function App() {
   return (
     <>
-      <Password />
+      <StudentList />
     </>
   )
 }
