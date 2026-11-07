@@ -1,32 +1,33 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export default function StudentList() {
-    const [students, setStudents] = useState([
-        { id: uuidv4(), name: "Hardik"},
-        { id: uuidv4(), name: "Vanshu"}
-    ]);
+function StudentList() {
+    const [students, setStudents] = useState(
+        {id: uuidv4(), name: "Hardik"},
+        {id: uuidv4(), name: "Vanshu"}
+    )
 
-    let addStudent = ()=> {
-        let newStudent = {id: uuidv4(), name: "Aman"};
-        setStudents((prevStudents)=> [...prevStudents, newStudent]);
+    const addStudent = () => {
+        const newStudent = {id: uuidv4(), name: "New Student"};
+        setStudents((prevStudents) => [...prevStudents, newStudent]);
     }
 
-    let deleteStudent = (id => {
-        setStudents((prevStudents) => prevStudents.filter((student) => student.id !== id));
-    })
+    const deleteStudent =(id) => {
+        setStudents((prevStudents) => prevStudents.filter((student)=> student.id !== id));
+    }
 
-    return (
+    return(
         <>
-            <h3>Student List</h3>
-            <ul>
-                {students.map((student) => {
-                    return <li key={student.id}>{student.name}
-                    <button onClick={() => deleteStudent(student.id)}>Delete</button></li>;
-                })}
-            </ul>
+            <h1>Student List</h1>
+            {students.map((student) => {
+                return <li key= {student.id}>{student.name}
+                <button onClick={() => deleteStudent(student.id)}>Delete</button>
+                </li>
+                
+            })}
             <button onClick={addStudent}>Add Student</button>
-            
         </>
     )
 }
+
+export default StudentList;
