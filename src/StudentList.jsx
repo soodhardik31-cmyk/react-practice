@@ -19,6 +19,10 @@ function StudentList() {
         setStudents((prevStudents) => prevStudents.filter((student)=> student.id !== id));
     }
 
+    const handleEdit = (student) => {
+        setEditingId(student.id);
+        setName(student.name);
+    }
     //update student
     const updateStudent = (id, newName) => {
         setStudents((prevStudents) => prevStudents.map((student) =>
