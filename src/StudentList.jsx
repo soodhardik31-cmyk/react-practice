@@ -37,7 +37,25 @@ function StudentList() {
     const editStudent = (student) => {
         setEditingId(student.id);
         setName(student.name);
-    }
+    };
+
+    //update a student in a list
+    const updateStudent =()=> {
+        if(name.trim() === "") {
+            return; // Do not update to an empty name.
+        }
+        const updatedStudents = students.map((student) => {
+            if(student.id === editingId){
+                return {...student, name: name};
+            }
+            return student;
+        });
+
+        setStudents(updatedStudents);
+        setEditingId(null);
+        setName("");
+    };
+
 
     return (
         <>
@@ -49,7 +67,11 @@ function StudentList() {
                 onChange={(e) => setName(e.target.value)}
             />
 
-            <button onClick={addStudent}>Add Student</button>
+            {editingId ? (
+                <button onClick={updateStudent}>Update Student</button>
+            ) : (
+                <button onClick={addStudent}>Add Student</button>
+            )}
             <ul>
                 {/* Rendering or displaying the List of Students */}
                 {students.map((student) => {
