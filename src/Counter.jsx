@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Counter() {
     const [count, setCount] = useState(10);
 
-    let increaseCount = () => {
+    useEffect(() => {
+        document.title =`Count: ${count}`;
+    }, [count]);
+
+    const increaseCount = () => {
         setCount(count + 5);
     }
 
-    let decreaseCount = () => {
+    const decreaseCount = () => {
         setCount(count - 2);
     }
-    let resetCount = () => {
+    const resetCount = () => {
         setCount(10);
     }
     return (
