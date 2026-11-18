@@ -27,8 +27,13 @@ export default function TodoList() {
 
     //update a task
     const updateTask = (id) => {
-
-
+        setTodos((prevTodos) =>
+            prevTodos.map((todo)=>
+                todo.id === id ? {...todo, tasks: editText} : todo
+            )
+        );
+        setEditId(null);
+        setEditText("");
     }
 
     return (
@@ -48,19 +53,39 @@ export default function TodoList() {
                 {todos.map((todo)=>{
                     return(
                         <li key={todo.id}>
-                            <span>{todo.tasks}</span>
+                            {editId === todo.id ? (
+                                <input
+                                    value={editText}
+                                    onChange= {(e) => setEditText(e.target.value)}
+                                />
+                            ) : (
+                                <span>{todo.tasks}</span>
+                            )}
+                            
                             &nbsp;&nbsp;&nbsp;
                             <button onClick={() => deleteTask(todo.id)}>Delete</button>
                             &nbsp;&nbsp;
-                            <button onClick={() => {
-                                setEditId(todo.id);
-                                setEditText(todo.tasks);
-                            }}>Edit</button>
+
+                            {editId ===  todo.id ? (
+                                <>
+                                    <button onClick = {() => updateTask(todo.id)}>Save</button>
+                                    &nbsp;&nbsp;
+                                    <button onClick = { () => {
+                                        setEditId(null);
+                                        setEditText("");
+                                    }}>Cancel</button>
+                                </>
+                            ) : (
+                                <button onClick={() => {
+                                    setEditId(todo.id);
+                                    setEditText(todo.tasks);
+                                }}>Edit</button>
+                            )}
+                            
                         </li>
                     )
-                    
                 })}
             </ul>
         </>
-    )
+    );
 }
