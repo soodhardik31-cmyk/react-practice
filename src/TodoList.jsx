@@ -2,20 +2,33 @@ import { useState } from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 export default function TodoList() {
-    const [todo, setTodo] = useState(["sample task"]);
+    //state variable holds list todo
+    const [todos, setTodos] = useState([{tasks: "Sample Task", id: uuidv4()}]);
+    //state variable holds new task to be added to the list
     const [newTodo, setNewTodo] = useState("");
+    //state variable holds the id of the task being edited
+    const [editId, setEditId] = useState(null);
+    //state variable holds the text of the task being edited
+    const [editText, setEditText] = useState("");
 
     //add a task
     const addTask = ()=> {
-        setTodo([...todo, newTodo]);
+
+        if(newTodo.trim() ==="") return; // do not add empty tasks
+
+        setTodos((prevTodos) => [...prevTodos, {tasks: newTodo, id: uuidv4()}]);
         setNewTodo("");
     }
 
     //delete a task
     const deleteTask = (id)=> {
-        setTodo((prevTodo) => {
-            return prevTodo.filter((todo) => todo.id !== id);
-        })
+        setTodos((prevTodos) =>  prevTodos.filter((todo) => todo.id !== id));
+    }
+
+    //update a task
+    const updateTask = (id) => {
+
+
     }
 
     return (
@@ -32,12 +45,21 @@ export default function TodoList() {
 
             <h4>Tasks Todo</h4>
             <ul>
-                {todo.map((todos)=>{
-                    return <li key={todo.id}>{todos}
-                            <button onClick={() => deleteTask(todo)}>Delete</button>
-                            </li>
+                {todos.map((todo)=>{
+                    return(
+                        <li key={todo.id}>
+                            <span>{todo.tasks}</span>
+                            &nbsp;&nbsp;&nbsp;
+                            <button onClick={() => deleteTask(todo.id)}>Delete</button>
+                            &nbsp;&nbsp;
+                            <button onClick={() => {
+                                setEditId(todo.id);
+                                setEditText(todo.tasks);
+                            }}>Edit</button>
+                        </li>
+                    )
+                    
                 })}
             </ul>
         </>
     )
-}
