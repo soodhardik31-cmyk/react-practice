@@ -1,49 +1,43 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-
+import { useState } from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 export default function TodoList() {
-    let [todos, setTodos] = useState([{ tasks: "sample task", id: uuidv4()}]);
-    let [newTodo, setNewTodo] = useState("");
+    const [todo, setTodo] = useState(["sample task"]);
+    const [newTodo, setNewTodo] = useState("");
 
-    let addNewTask = () => {
-        setTodos((prevTodos) => {
-            return [...prevTodos, {tasks: newTodo, id: uuidv4()}]
-        });
+    //add a task
+    const addTask = ()=> {
+        setTodo([...todo, newTodo]);
         setNewTodo("");
     }
 
-    let updateTodoValue = (event) =>{
-        setNewTodo(event.target.value);
-    }
-
-    let deleteTodo =(id) =>{
-        setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !=id));
+    //delete a task
+    const deleteTask = (id)=> {
+        setTodo((prevTodo) => {
+            return prevTodo.filter((todo) => todo.id !== id);
+        })
     }
 
     return (
-        <div>
-            <input placeholder="add a task"
-                value={newTodo}
-                onChange={updateTodoValue}>
-            </input>
+        <>
+            <h1>Todo List</h1>
             <br></br>
-            <button onClick={addNewTask}>Add Task</button>
+            <input
+                placeholder="Add a task"
+                value={newTodo}
+                onChange={(e)=> setNewTodo(e.target.value)}
+            />
             <br></br><br></br>
+            <button onClick={addTask}>Add Task</button>
 
-            <hr></hr>
             <h4>Tasks Todo</h4>
             <ul>
-                {
-                    todos.map((todo) => (
-                        <li key={todo.id}>
-                            <span>{todo.tasks}</span>
-                            &nbsp;&nbsp;&nbsp;
-                            <button onClick={() => deleteTodo(todo.id)}>delete</button>
-                    </li>
-                    ))
-                }
+                {todo.map((todos)=>{
+                    return <li key={todo.id}>{todos}
+                            <button onClick={() => deleteTask(todo)}>Delete</button>
+                            </li>
+                })}
             </ul>
-        </div>
+        </>
     )
 }
