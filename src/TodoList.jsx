@@ -3,7 +3,11 @@ import {v4 as uuidv4} from 'uuid';
 
 export default function TodoList() {
     //state variable holds list todo
-    const [todos, setTodos] = useState([{tasks: "Sample Task", id: uuidv4()}]);
+    const [todos, setTodos] = useState([{
+        tasks: "Sample Task",
+        id: uuidv4(),
+        completed: false
+    }]);
     //state variable holds new task to be added to the list
     const [newTodo, setNewTodo] = useState("");
     //state variable holds the id of the task being edited
@@ -36,6 +40,17 @@ export default function TodoList() {
         setEditText("");
     }
 
+    //complete a task
+    const markCompleted = (id) => {
+        setTodos((prevTodos) =>
+            prevTodos.map((todo) =>
+                todo.id === id
+                    ? {...todo, completed: !todo.completed}
+                    : todo
+            )
+        );
+    }
+
     return (
         <>
             <h1>Todo List</h1>
@@ -53,6 +68,7 @@ export default function TodoList() {
                 {todos.map((todo)=>{
                     return(
                         <li key={todo.id}>
+                            
                             {editId === todo.id ? (
                                 <input
                                     value={editText}
