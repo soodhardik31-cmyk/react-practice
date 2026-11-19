@@ -31,6 +31,7 @@ export default function TodoList() {
 
     //update a task
     const updateTask = (id) => {
+        if(editText.trim() === "") return; // do not update empty task
         setTodos((prevTodos) =>
             prevTodos.map((todo)=>
                 todo.id === id ? {...todo, tasks: editText} : todo
@@ -69,6 +70,7 @@ export default function TodoList() {
                     return(
                         <li key={todo.id}>
                             
+                            {/** edit functionality */}
                             {editId === todo.id ? (
                                 <input
                                     value={editText}
@@ -77,11 +79,7 @@ export default function TodoList() {
                             ) : (
                                 <span>{todo.tasks}</span>
                             )}
-                            
                             &nbsp;&nbsp;&nbsp;
-                            <button onClick={() => deleteTask(todo.id)}>Delete</button>
-                            &nbsp;&nbsp;
-
                             {editId ===  todo.id ? (
                                 <>
                                     <button onClick = {() => updateTask(todo.id)}>Save</button>
@@ -97,6 +95,13 @@ export default function TodoList() {
                                     setEditText(todo.tasks);
                                 }}>Edit</button>
                             )}
+                            
+                            &nbsp;&nbsp;&nbsp;
+                            {/** delete task button */}
+                            <button onClick={() => deleteTask(todo.id)}>Delete</button>
+                            &nbsp;&nbsp;
+
+                            
                             
                         </li>
                     )
