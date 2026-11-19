@@ -68,7 +68,12 @@ export default function TodoList() {
             <ul>
                 {todos.map((todo)=>{
                     return(
-                        <li key={todo.id}>
+                        <li key={todo.id} >
+                            <input
+                                type = "checkbox"
+                                checked = {todo.completed}
+                                onChange = {()=> markCompleted(todo.id)}
+                            />
                             
                             {/** edit functionality */}
                             {editId === todo.id ? (
@@ -77,7 +82,7 @@ export default function TodoList() {
                                     onChange= {(e) => setEditText(e.target.value)}
                                 />
                             ) : (
-                                <span>{todo.tasks}</span>
+                                <span style={{textDecoration : todo.completed ? "line-through" : "none"}}>{todo.tasks}</span>
                             )}
                             &nbsp;&nbsp;&nbsp;
                             {editId ===  todo.id ? (
